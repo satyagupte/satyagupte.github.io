@@ -1,6 +1,4 @@
 ---
-author: satyajit
-comments: true
 date: 2023-07-24 09:58:57+00:00
 excerpt: None
 layout: post

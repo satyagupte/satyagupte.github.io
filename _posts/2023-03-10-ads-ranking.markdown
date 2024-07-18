@@ -1,6 +1,4 @@
 ---
-author: satyajitvgupte
-comments: true
 date: 2023-03-10 03:29:11+00:00
 excerpt: None
 layout: post

@@ -17,7 +17,7 @@ and take a look at these two very similar looking but different species of drago
 must learn.
 <!--more-->
 
-![](https://nofreehunch.org/wp-content/uploads/2023/08/image-6.png?w=1024)_Figure - The For-striped vs Five-striped
+![](https://nofreehunch.org/wp-content/uploads/2023/08/image-6.png?w=1024)_Figure - The Four-striped vs Five-striped
 Leaftail. The model could not see the difference. Can you ? _
 
 This is definitely not your dogs vs cats intro to CV !
