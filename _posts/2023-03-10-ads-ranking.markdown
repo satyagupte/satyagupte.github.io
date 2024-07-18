@@ -12,6 +12,7 @@ tags:
 - Calibration
 - Deep Learning
 - MTL
+math: true
 ---
 
 Welcome to  the third post in the [How Ads work](https://nofreehunch.org/tag/ads-ml/) series. In this post we are going to discuss Ads Ranking in depth. This is where ML really comes to the party! At the end of [Ads Retrieval](https://nofreehunch.org/2023/02/25/retrieval/), we have a pool of about a thousand fairly relevant ad candidates. Now it’s time to really identify the very best ads.  
@@ -56,23 +57,18 @@ Since we framed the problem as a binary classification problem, we are going to 
 
 Normalizing the log loss by the entropy of the empirical click through rate (CTR) is an even better metric, as it measures the relative improvement over just predicting the empirical CTR.
 
-$latex
-\begin{aligned}
+
+$$
 Normalized Log Loss = \frac{-\frac{1}{N}\sum_{i=1}^{N} y_{i}*log(p_i) + (1-y_i)*log(1-p_i)}{-(p*log(p) + (1-p)*log(1-p))}
-\end{aligned}
-$
+$$
 
     
-    <code>p<sub>i</sub> (in the numerator)  = pClick for a particular example
-    p (in the denominator) = empirical CTR </code>
+where 
+p (in the denominator) = empirical CTR 
 
 AUC is also a  good metric to track, but it only captures the relative ordering of ad scores. To track how close the probability estimates are to the empirical CTR we measure calibration. Calibration is the ratio of the average pClick to the empirical CTR
 
-$latex
-\begin{aligned}
-Calibration = \frac{\frac{1}{N}\sum p_i}{p}
-\end{aligned}
-$
+$Calibration = \frac{\frac{1}{N}\sum p_i}{p}$
 
 So the metrics we track are 
 
