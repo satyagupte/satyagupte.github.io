@@ -298,7 +298,7 @@ Thank you for reading and please leave a comment  if you have any questions. 
 
 ## Further reading
 
-  1. [Paper](http://quinonero.net/Publications/predicting-clicks-facebook.pdf) on how Facebook predicts ad clicks. The base model used in this paper is a GBDT. This is a classic paper.
+  1. [Paper](https://quinonero.net/Publications/predicting-clicks-facebook.pdf) on how Facebook predicts ad clicks. The base model used in this paper is a GBDT. This is a classic paper.
 
   2. Another classic [Paper](https://dl.acm.org/doi/pdf/10.1145/2487575.2488200) from Google on ad click prediction. 
 
