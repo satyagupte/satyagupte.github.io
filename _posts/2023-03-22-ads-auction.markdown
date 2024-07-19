@@ -50,7 +50,7 @@ Google solved this problem by introducing a scheme called the Generalized Second
 
 The ads are ranked by expected revenue (pClick * bid) and placed in slots. But instead of each advertiser paying its own bid, it pays what the advertiser one slot below it had bid plus a small increment. The figure below should help understand this clearly.
 
-![](https://nofreehunch.org/wp-content/uploads/2023/03/auction-1.jpeg?w=1024)Figure - GSP with 3 slots 
+![](/assets/img/post_images/2023_03_auction-1.jpeg)Figure - GSP with 3 slots 
 
 Now advertisers are no longer able to figure out the minimum bid required to win an auction, since they don’t know what the second highest bid is. This keeps the auction efficient and prevents attempts to game the system. There are additional rules like minimum floor prices and if bids are below that no ads get shown.
 

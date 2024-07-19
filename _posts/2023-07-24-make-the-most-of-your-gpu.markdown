@@ -35,7 +35,7 @@ The last couple of weeks, I have been playing around with data from my favorite 
     - [Update on Training with a V100](#update-on-training-with-a-v100)
 
 
-![](https://nofreehunch.org/wp-content/uploads/2023/07/image.png?w=1024)_Figure  - Yes they are all [lizards](https://www.inaturalist.org/observations?place_id=any&taxon_id=26036&user_id=tragopan&verifiable=any) ! But some people care about minute differences between the two species of Fence lizards. _
+![](/assets/img/post_images/2023_07_image.png)_Figure  - Yes they are all [lizards](https://www.inaturalist.org/observations?place_id=any&taxon_id=26036&user_id=tragopan&verifiable=any) ! But some people care about minute differences between the two species of Fence lizards. _
 
 Training Deep learning models on your own dime on the cloud can quickly make the costs of Deep learning a very concrete concept. Without the privilege of a GPU cluster, bankrolled by your tech overlords,  what’s an independent engineer gotta do ?
 
@@ -45,7 +45,7 @@ In this post we will look at getting the most bang from a single mid end GPU on 
 
 Let us start from first principles and take a look at how data flows when you train on the GPU. 
 
-![](https://nofreehunch.org/wp-content/uploads/2023/07/image-1.png)_Figure  - The GPU Pipeline _
+![](/assets/img/post_images/2023_07_image-1.png)_Figure  - The GPU Pipeline _
 
 Roughly we can separate out three stages 
 
@@ -87,11 +87,11 @@ Here is some PyTorch code that creates a Dataset, wraps it around a DataLoader a
 
 We vary the number of worker processes dedicated to reading data and run through a few hundred batches to see what throughput looks like.
 
-![](https://nofreehunch.org/wp-content/uploads/2023/07/image-1-2.png)_Figure - Data Loader on GCP_
+![](/assets/img/post_images/2023_07_image-1-2.png)_Figure - Data Loader on GCP_
 
 We see that throughput starts plateauing at about 4 workers. I was curious to see if the “balanced persistent” disks that GCP has were slowing things down. I ran the same experiment on my MacBook
 
-![](https://nofreehunch.org/wp-content/uploads/2023/07/image-1-3.png)_Figure - Data Loader on my MacBook vs GCP _
+![](/assets/img/post_images/2023_07_image-1-3.png)_Figure - Data Loader on my MacBook vs GCP _
 
 So, with 1 worker, DataLoading is indeed faster with the MacBook’s SSDs, but increasing the number of worker processes makes reading data from GCP’s network mounted disks, roughly as fast as reading from a locally mounted SSD. Note that increasing the number of workers increases the RAM usage as each process maintains its own copy of objects.
 
@@ -125,7 +125,7 @@ This is how the throughput curves look like. On the y-axis we have Images proces
 
 Also note how the throughput curves take time to warm up. This is expected. 
 
-![](https://nofreehunch.org/wp-content/uploads/2023/07/image-2-2.png?w=1024)_Figure - Y Axis is throughput, X Axis is batch index. We see 3 clusters_
+![](/assets/img/post_images/2023_07_image-2-2.png)_Figure - Y Axis is throughput, X Axis is batch index. We see 3 clusters_
 
 Plotting the throughput like this, the curves quite neatly cluster into 3 groups and the insights scream out
 
@@ -137,7 +137,7 @@ Plotting the throughput like this, the curves quite neatly cluster into 3 groups
 
 Memory Pinning also helps, but only provides modest gains in throughput. Here is a cleaned up graph where we fix batch size, num workers and use automatic mixed precision 
 
-![](https://nofreehunch.org/wp-content/uploads/2023/07/image-3.png?w=1022)
+![](/assets/img/post_images/2023_07_image-3.png)
 
 Let’s dig a bit deeper into the knobs that mattered the most
 
@@ -145,7 +145,7 @@ Let’s dig a bit deeper into the knobs that mattered the most
 
 We saw enabling this gave us the largest boost (~1.7X more throughput), but how does it affect GPU utilization? Lets clean up the graph and use a fixed batch size of 128 and 2 workers in data loader 
 
-![](https://nofreehunch.org/wp-content/uploads/2023/07/image-2-3.png)_Figure - Utilization can be misleading _
+![](/assets/img/post_images/2023_07_image-2-3.png)_Figure - Utilization can be misleading _
 
 The lesson here is that  looking only at GPU utilization can fool us into thinking that we cannot increase throughput. By using Automatic mixed precision, we are able to do many more ops per second and that translates to the increased throughput
 
@@ -153,11 +153,11 @@ The lesson here is that  looking only at GPU utilization can fool us into think
 
 Why do we see a step change in throughput when we use more than 2 workers in the Data Loader. The graph in the figure are using batch size of 128, fixing the number of workers to 1 and enabling automatic mixed precision.  
 
-![](https://nofreehunch.org/wp-content/uploads/2023/07/image-2.png)_Figure - With only 1 worker,  GPU is underutilized _
+![](/assets/img/post_images/2023_07_image-2.png)_Figure - With only 1 worker,  GPU is underutilized _
 
 The model throughput approaches the Data Loader throughput with 1 worker and the GPU utilization is lower.  This means that when we use less than 2 workers, the bottleneck is the Data Loading stage. The GPU is sitting idle waiting for more tensors to crunch. 
 
-![](https://nofreehunch.org/wp-content/uploads/2023/07/image-1-1.png)_Figure - With 1 worker data loader throughput is 177, matching what is saw in the model throughput chart. Data Loading is the bottleneck when we use only 1 worker_
+![](/assets/img/post_images/2023_07_image-1-1.png)_Figure - With 1 worker data loader throughput is 177, matching what is saw in the model throughput chart. Data Loading is the bottleneck when we use only 1 worker_
 
 #### Don’t waste time and money optimizing the wrong part of your pipeline
 
@@ -243,7 +243,7 @@ As with everything in Deep Learning, all these recommendations are probably tied
 
 I was really curious to see how using a V100 would speed things up. I increased vCPU to 12 (GCP strangely limits this) and looked at throughput. For simplicity, I am plotting only configs with Auto Mixed precision enabled and with Pinned memory. I used way more workers in the Data Loader.
 
-![](https://nofreehunch.org/wp-content/uploads/2023/07/image-4.png?w=1024)_Figure - Throughput on V100. _
+![](/assets/img/post_images/2023_07_image-4.png)_Figure - Throughput on V100. _
 
 Frankly, I was underwhelmed. We get to 760 Images per sec, which is about 3X of what I was seeing on the T4. I made sure that GPU utilization was close to 100% (it was). **So paying 7X more only gives us 3X more throughput** .
 

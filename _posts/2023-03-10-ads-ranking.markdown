@@ -84,7 +84,7 @@ Our strategy will be to optimize for  LogLoss and Calibration in two separate mo
 
 The base DL model is large and could have hundreds of millions parameters. It  is trained on a very  large amount  of historical data (several weeks) and then frozen. The calibration model  takes only a handful of features and is trained on a much smaller amount of data (a few hours). Take a look at the model structure in the figure below. 
 
-![](https://nofreehunch.org/wp-content/uploads/2023/03/ranking-page-3.jpeg?w=1024)Figure  - A cascade of two models (only a few example features shown)
+![](/assets/img/post_images/2023_03_ranking-page-3.jpeg)Figure  - A cascade of two models (only a few example features shown)
 
 ### Features for the Base Model 
 
@@ -152,7 +152,7 @@ The initial layers are embeddings for MultiHot and One Hot Vectors and Preproces
 
 After we concatenate everything into a nice big vector, we do a **full feature cross**. The feature cross layer is simply the input vector multiplied with its own transpose. The matrix that results has all the possible pairwise feature interactions. In theory Deep Learning is supposed to learn these sorts of interactions, but doing this explicit crossing greases the wheels a lot.
 
-![](https://nofreehunch.org/wp-content/uploads/2023/03/image.png?w=300)Figure  - Feature Cross Layer
+![](/assets/img/post_images/2023_03_image.png)Figure  - Feature Cross Layer
 
 The Feature Cross Layers does not have any parameters to learn. We flatten the result  and feed it into the Fully Connected Layers that follow. It’s a good idea to follow every Fully connected layer with  BatchNormalization and Dropout. The top most layer is a sigmoid. 
 
@@ -172,13 +172,13 @@ The calibration model is a simple Logistic regression model that takes as input 
 
 The calibration model should not affect the AUC. In fact, if we only use the output of the base DL model as the input feature, it is guaranteed to not change the AUC of the base model, as we only monotonically transform the score. This calibration technique is also called Platt scaling. Plotting a calibration curve like in the figure below will show you regions where the model is over and under calibrated. To draw this plot, we bin the predictions onto equal sized bins and then take the average predicted value in each bin (x axis) and plot it against the fraction of positives (ad click , y = 1) in that bin.
 
-![](https://nofreehunch.org/wp-content/uploads/2023/03/image-3.png?w=1024)Figure - Calibration Plot
+![](/assets/img/post_images/2023_03_image-3.png)Figure - Calibration Plot
 
 ## How to Train and Test the model 
 
 We partition our data into three time separated chunks and train the two models in stages.
 
-![](https://nofreehunch.org/wp-content/uploads/2023/03/train-test-scheme.jpeg?w=1024)Figure  - Rolling Train and Test splits, N = 28 in this example
+![](/assets/img/post_images/2023_03_train-test-scheme.jpeg)Figure  - Rolling Train and Test splits, N = 28 in this example
 
   * Train the base model with several week(s) of data. Call these days Day 1 to Day _N_. We subsample the data uniformly (if required) and do negative sampling on this set. Sampling rates are a parameter we need to tune. 
 
@@ -266,7 +266,7 @@ There are two ways we can implement the MTL idea.
 
   2. Lite MTL. First train the base  click prediction model. Freeze the base DL model and then add a block of a few layers for each task. Learn only the parameters for these newly added layers.  Use the exact same features as the base click model.
 
-![](https://nofreehunch.org/wp-content/uploads/2023/03/ranking-page-4-1.jpeg?w=1024)Figure - Lite MTL to predict 3 different actions
+![](/assets/img/post_images/2023_03_ranking-page-4-1.jpeg)Figure - Lite MTL to predict 3 different actions
 
 We will prefer the Lite MTL approach because it keeps things simpler.
 

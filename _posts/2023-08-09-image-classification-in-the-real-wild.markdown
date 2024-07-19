@@ -17,7 +17,7 @@ and take a look at these two very similar looking but different species of drago
 must learn.
 <!--more-->
 
-![](https://nofreehunch.org/wp-content/uploads/2023/08/image-6.png?w=1024)_Figure - The Four-striped vs Five-striped
+![](/assets/img/post_images/2023_08_image-6.png)_Figure - The Four-striped vs Five-striped
 Leaftail. The model could not see the difference. Can you ? _
 
 This is definitely not your dogs vs cats intro to CV !
@@ -58,13 +58,13 @@ first lets dive into the results.
 The model got to about 77% accuracy in 16 epochs. Every epoch took about 3 hours on the T4. Looking at the loss and
 accuracy curves on the test set, I think the model still had a lot of headroom.
 
-![](https://nofreehunch.org/wp-content/uploads/2023/08/image-8.png?w=1024)_Figure - I stopped at 16 epochs. _
+![](/assets/img/post_images/2023_08_image-8.png)_Figure - I stopped at 16 epochs. _
 
 Here’s a look at the model in action. It gets the predicted class (
 a [Hooded Warbler](https://www.allaboutbirds.org/guide/Hooded_Warbler/id)) right and looking the the Grad-CAM heatmap,
 it appears that the model thought that the conspicuous black throat and yellow belly were important clues.
 
-![](https://nofreehunch.org/wp-content/uploads/2023/08/image-1-2.png)_Figure - Looking at what the model predicts _
+![](/assets/img/post_images/2023_08_image-1-2.png)_Figure - Looking at what the model predicts _
 
 ## The Recipe 
 
@@ -87,7 +87,7 @@ of the other ingredients.
    increases the LR for the first five epochs linearly (warmup) and then decreases the learning rate smoothly using the
    cosine function. This is what it looks like .
 
-![](https://nofreehunch.org/wp-content/uploads/2023/08/image-7.png?w=1024)_Figure - The warmup uses quite high learning
+![](/assets/img/post_images/2023_08_image-7.png)_Figure - The warmup uses quite high learning
 rates_
 
 3. Auto Augment. Instead of focusing on only one data augmentation strategy like image rotations or color transforms ,
@@ -114,16 +114,16 @@ average accuracy.
 
 Here are some groups that the model did considerably worse than average.
 
-![](https://nofreehunch.org/wp-content/uploads/2023/08/image-4-1.png)_Figure - Groups with lower accuracy. _
+![](/assets/img/post_images/2023_08_image-4-1.png)_Figure - Groups with lower accuracy. _
 
 Latin taxonomic names always throw me off and I had to look at some of the images to see what exactly is a Pinales (they
 are Pine trees), or a Suliformes (water birds like cormorants)
 
 Lets now see what groups the model did rather well on
 
-![](https://nofreehunch.org/wp-content/uploads/2023/08/image-1-1.png)
+![](/assets/img/post_images/2023_08_image-1-1.png)
 
-![](https://nofreehunch.org/wp-content/uploads/2023/08/image-3.png)_ Figure - Butterflies and sea snails are brightly
+![](/assets/img/post_images/2023_08_image-3.png)_ Figure - Butterflies and sea snails are brightly
 patterned and have higher accuracy_
 
 After spending quite some time looking at metrics and images like these , I think some themes are notable.
@@ -146,9 +146,9 @@ incorrectly called an animal as compared to calling a eurasian curlew a long bil
 
 Here are some incorrect classifications at the Kingdom level.
 
-![](https://nofreehunch.org/wp-content/uploads/2023/08/image-2.png)_Figure - Mistaking a bush for a hedgehog !_
+![](/assets/img/post_images/2023_08_image-2.png)_Figure - Mistaking a bush for a hedgehog !_
 
-![](https://nofreehunch.org/wp-content/uploads/2023/08/image-4.png)_Figure - a bee on a flower. Whats the correct id ?_
+![](/assets/img/post_images/2023_08_image-4.png)_Figure - a bee on a flower. Whats the correct id ?_
 
 In the first case, a spiny looking shrub is incorrectly classified as a hedgehog. I found this quite funny !
 
@@ -158,7 +158,7 @@ this.
 
 Here is another interesting error.
 
-![](https://nofreehunch.org/wp-content/uploads/2023/08/image-1.png)_Figure - A coin placed for size reference, throws
+![](/assets/img/post_images/2023_08_image-1.png)_Figure - A coin placed for size reference, throws
 the model off _
 
 The observer has placed a coin for size reference (a common practice) next to what looks like a branch of a tree and the
@@ -176,7 +176,7 @@ such stupidity.
 
 We did not use any notion of taxonomy in the model and I was curious to see how the model errors were distributed.
 
-![](https://nofreehunch.org/wp-content/uploads/2023/08/image.png)
+![](/assets/img/post_images/2023_08_image.png)
 
 Most of the errors (~33%) are at the species level and the shape of this distribution looks reasonable. In Spite of the
 higher error under “Order” and “Kingdom” , I think the model does learn something about the taxonomy. Another
@@ -184,7 +184,7 @@ interpretation is that the Linnaean system of taxonomy roughly matches visual gr
 
 Most of the errors under Order look like mis-identified plants and birds
 
-![](https://nofreehunch.org/wp-content/uploads/2023/08/image-1-3.png)
+![](/assets/img/post_images/2023_08_image-1-3.png)
 
 ## An idea for a  loss that encourages Taxonomy
 
@@ -217,7 +217,7 @@ PyTorch does provide easy ways to do that. I did not experiment with this though
 the baseline model (already trained for 16 epochs using iNat data) and trained for 2 epochs. This model got to about 80%
 accuracy.
 
-![](https://nofreehunch.org/wp-content/uploads/2023/08/image-5.png)_Figure - Test accuracy_
+![](/assets/img/post_images/2023_08_image-5.png)_Figure - Test accuracy_
 
 I then read about [GeoPrior](https://arxiv.org/pdf/1906.05272.pdf) a model that encodes location and time to learn
 priors for species. This seems like a very nice way to basically combine priors with any kind of classification model.

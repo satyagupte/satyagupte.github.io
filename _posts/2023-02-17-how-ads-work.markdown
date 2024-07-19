@@ -42,7 +42,7 @@ Now these platforms of course want to get paid a lot. So they try real hard to s
 
 Take a minute to look at the picture below. 
 
-![](https://nofreehunch.org/wp-content/uploads/2023/02/image.png?w=1024)Figure  - A bird's eye view
+![](/assets/img/post_images/2023_02_image.png)Figure  - A bird's eye view
 
 The numbers next to the arrows indicate how things are usually sequenced. The  **Query** (number 1) starts off the whole flow which ends when **Ads** are shown. (number 8).  The Query here includes the user and whatever context is available. The context could include a search phrase, a video or an image for example.  Not shown here is how the ads and organic results are finally put together to render the entire page.  
 
@@ -52,7 +52,7 @@ The feature store (in figure 1)  which stores all the features required by the 
 
 Let's take a look at each of these high level components. 
 
-![](https://nofreehunch.org/wp-content/uploads/2023/02/blank-diagram-page-2.jpeg?w=1024)The Ads Funnel
+![](/assets/img/post_images/2023_02_blank-diagram-page-2.jpeg)The Ads Funnel
 
 ## Ads Mixer
 

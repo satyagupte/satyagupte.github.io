@@ -36,7 +36,7 @@ In the [last post ](https://nofreehunch.org/2023/02/17/how-ads-work/)we looked a
 
 In most Ads Serving systems, Retrieval is composed of several separate candidate generators. The results from several candidate generators are blended and rules (like ad budget) are used to further filter out candidates. Let's take a look at some typical candidate generators. 
 
-![](https://nofreehunch.org/wp-content/uploads/2023/03/retrieval-copy-of-page-1-2.jpeg?w=300)Figure - Retrieval is composed of several candidate generators
+![](/assets/img/post_images/2023_03_retrieval-copy-of-page-1-2.jpeg)Figure - Retrieval is composed of several candidate generators
 
 ## Text based document search
 
@@ -84,7 +84,7 @@ Remember that our goal in retrieval is to select candidates that are likely to b
 
 ### Model Structure
 
-![](https://nofreehunch.org/wp-content/uploads/2023/03/retrieval-page-1.jpeg?w=1024) Figure - The Two Tower DNN model
+![](/assets/img/post_images/2023_03_retrieval-page-1.jpeg) Figure - The Two Tower DNN model
 
 
 We separate out the model into two towers. The **Ad tower** and the **Query** . Keeping the towers separate is what allows fast retrieval during serving. We lose out on capturing more complex interactions between the Query and Ad, but remember our goal here is to have a lightweight model that gets us a good enough set of ad candidates. 
