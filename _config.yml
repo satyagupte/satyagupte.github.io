@@ -16,7 +16,7 @@ timezone:
 
 title: Satyajit Gupte's blog # the main title
 
-tagline: my notes on ML systems # it will display as the sub-title
+tagline: my notes on ML  systems # it will display as the sub-title
 
 description: >- # used by seo meta and the atom feed
   notes on designing ML systems.
