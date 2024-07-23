@@ -109,7 +109,7 @@ I hope this long overview was useful in setting the context. In the next post, I
 ## Further Reading
 
 1. Amazon's orginal paper on [item-item recommender system](https://www.cs.umd.edu/~samir/498/Amazon-Recommendations.pdf)
-2. A [classic overview]() of recommenders by the GroupLens group (who published a lot of the early work in RecSys)
+2. A [classic overview](https://files.grouplens.org/papers/ec00.pdf) of recommenders by the GroupLens group (who published a lot of the early work in RecSys)
 3. Another [long read](https://d1wqtxts1xzle7.cloudfront.net/29667758/ecommerce_recommendation_fulltext-libre.pdf?1390877547=&response-content-disposition=inline%3B+filename%3DE_commerce_recommendation_applications.pdf&Expires=1721718334&Signature=g2CZX6U~RQk9dQZwBFQO2lXsenuUJN0WnNNZQ0T4KwzIGvxcEV8f5v5xbfxn-9Wn0YsGlbmHSjxDvHASN4eadyiuIBGwse-kbkvCAjXmioljlBKNLYAuNkFQf2uo7dlBfN8gZJZcw085MHyDlLopmkPQ1hDrdtOBtc2KAN8yuvgVbA4bOI1Nq1JmJpI1xp~-Qr6736Sip-hweDS2wAxMp7BungEp0YZjoThduA9-b12XFK9wlvZIUWWLk14cUb~J45Q~pQ9yx0Kjn5iBMjPfTMMpmbyg6bYq4~hBvLQVzCl64Q74HUPHUQSv56hi4ATPEHJGrb3tC4iRT-e6uta2Yg__&Key-Pair-Id=APKAJLOHF5GGSLRBV4ZA) from the GroupLens group
 4. Amazon's [re-look at RecSys](https://assets.amazon.science/76/9e/7eac89c14a838746e91dde0a5e9f/two-decades-of-recommender-systems-at-amazon.pdf) after 20 years
    
