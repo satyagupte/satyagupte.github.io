@@ -54,10 +54,13 @@ This is only a rough separation and platforms are happy to fill the entire page 
 
 ## The Data
 
+Take a look at the simplistic user journey in the figure below.
+
+
 ![](/assets/img/post_images/userflow.png) 
 *User journey. Green arrows are for recommenders*
 
-Take a look at the simplistic user journey in the figure above. Every user action (like a page view, search, add to cart, recommender impressions, etc ) gets logged. Offline data processing pipelines sort these chronologically for every user and session.  This interaction data, when aggregated across users and for a sufficiently long window of time, provides the fuel for recommender systems. 
+ Every user action (like a page view, search, add to cart, recommender impressions, etc ) gets logged. Offline data processing pipelines sort these chronologically for every user and session.  This interaction data, when aggregated across users and for a sufficiently long window of time, provides the fuel for recommender systems. 
 
 Product Relations can sometimes emerge from this, which might seem counterintuitive. For example, notice the recommendations for the kid's Crocs (on the checkout page), including some very similar-looking crocs. Do users really buy a lot of Crocs together in one order? Perhaps, they buy a few and return the ones that didn't fit. 
 
