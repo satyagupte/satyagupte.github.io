@@ -191,7 +191,7 @@ Here’s how the components line up.
 ![](/assets/img/post_images/ranking_utility.png)
 *Recommendations are more than just embedding similarities*
 
-I’ll only briefly talk about the Ranking stage. For the related product strategy, we usually use a lightweight ML model to (re) rank the candidates from the embedding lookup stage. The heavy lifting is already done in the embedding generation stage.  For a more detailed look at ranking for ads, please check this [earlier post](/_posts/2023-03-10-ads-ranking.markdown).
+I’ll only briefly talk about the Ranking stage. For the related product strategy, we usually use a lightweight ML model to (re) rank the candidates from the embedding lookup stage. The heavy lifting is already done in the embedding generation stage.  For a more detailed look at ranking for ads, please check this [earlier post](./2023-03-10-ads-ranking.markdown).
 
 Some features that make sense for the lightweight ML model. 
 
@@ -229,4 +229,4 @@ The recommendations of the Product Page are the most important for any retailer.
 7. [GraphSage](https://arxiv.org/abs/1706.02216), making GNN’s scale   
 8. [PinSage](https://arxiv.org/pdf/1806.01973), Pinterest's recommendation algorithm   
 9. An [interesting paper](https://assets.amazon.science/d6/56/d03a00d14fd39c3486614e611e51/recommending-related-products-using-graph-neural-networks-in-directed-graphs.pdf) from Amazon, that uses GNN’s in directed graphs for product recs  
-10. [Target’s take](https://arxiv.org/pdf/1911.10232) on GNNs for product recs. Hi Amit & Kini \!
+10. [Target’s take](https://arxiv.org/pdf/1911.10232) on GNNs for product recs. :wave: Amit & Kini \!
