@@ -191,7 +191,7 @@ Here’s how the components line up.
 ![](/assets/img/post_images/ranking_utility.png)
 *Recommendations are more than just embedding similarities*
 
-I’ll only briefly talk about the Ranking stage. For the related product strategy, we usually use a lightweight ML model to (re) rank the candidates from the embedding lookup stage. The heavy lifting is already done in the embedding generation stage.  For a more detailed look at ranking for ads, please check this [earlier post](./2023-03-10-ads-ranking.markdown).
+I’ll only briefly talk about the Ranking stage. For the related product strategy, we usually use a lightweight ML model to (re) rank the candidates from the embedding lookup stage. The heavy lifting is already done in the embedding generation stage.  For a more detailed look at ranking for ads, please check this [earlier post](https://satyagupte.github.io/posts/ads-ranking/).
 
 Some features that make sense for the lightweight ML model. 
 
