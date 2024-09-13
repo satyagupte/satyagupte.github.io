@@ -4,7 +4,7 @@ date: 2024-09-11 04:40:10+00:00
 excerpt: None
 layout: post
 slug: related-product-recommenders
-title: Related Product Recommendations
+title: How E-commerce recommenders work, Related Products 
 categories:
 - Recommender Systems
 tags:
@@ -12,7 +12,17 @@ tags:
 math: true
 ---
 
-After the introductory overview of e-commerce recommenders, it’s now time to get to the Related Products strategy. The biggest chunk of revenue that flows through recommenders comes from this strategy and I want to dig deeper into how this is (usually) implemented in this post.
+#### Table of contents
+- [The product page](#the-product-page)
+- [A naive (yet effective) algorithm.](#a-naive-yet-effective-algorithm)
+- [Product To Vectors](#product-to-vectors)
+- [Product Graphs](#product-graphs)
+- [Putting it all together - Personalization, Utility and Rules](#putting-it-all-together---personalization-utility-and-rules)
+- [Pitfalls in Evaluation](#pitfalls-in-evaluation)
+- [Closing thoughts](#closing-thoughts)
+- [Further Reading](#further-reading)
+
+After the introductory [overview](https://satyagupte.github.io/posts/how-ecommerce-recommenders-work/) of e-commerce recommenders, it’s now time to get to the Related Products strategy. The biggest chunk of revenue that flows through recommenders comes from this strategy and I want to dig deeper into how this is (usually) implemented in this post.
 
 ## The product page
 
@@ -37,7 +47,7 @@ To make things concrete, let’s imagine these 3 user sessions.
 
 The first row corresponds to a session by user 1 who viewed products p1, p2, and p3 in sequence.  
 
-The intuition for the simple algorithm is that products that occur within a session are related. We assume that a user has one intent during one session.  To get related products, for say p1, we just need to sort them by their frequency of co-occurrence (with p1).  Aggregating over all sessions, summing up and sorting, we get related products for p1
+The intuition for the simple algorithm is that **products that occur within a session are related**. We assume that a user has one intent during one session.  To get related products, for say p1, we just need to sort them by their frequency of co-occurrence (with p1).  Aggregating over all sessions, summing up and sorting, we get related products for p1
 
 From these 3 sessions, we would get these related products. The scores are the frequency of co-occurrence. 
 
@@ -60,12 +70,13 @@ An easy way to dampen the effect of popularity is to use cosine similarity inste
 | user1:session2 | 0 | 0 | 1 | 1 | 1 |
 | user2:session1 | 1 | 0 | 1 | 0 | 0 |
 
-$$
-\displaystyle
-similarity (p1, p3) = \frac{2}{\sqrt{2}*\sqrt{3}} = 0.82
-$$
 
-Now, with cosine similarity as the score we get these recommendations.
+$
+\displaystyle
+cosine\space similarity (p1, p3) = \frac{2}{\sqrt{2}*\sqrt{3}} = 0.82
+$
+
+With cosine similarity as the score we get these recommendations.
 
 p1 \--\> p3,0.82  p2,0.71  
 p2 \--\> p1,0.71  p3,0.58  
@@ -73,7 +84,7 @@ p3 \--\> p1,0.82  p2,0.58  p4,0.58  p5,0.58
 p4 \--\> p5,1.00  p3,0.58  
 p5 \--\> p4,1.00  p3,0.58
 
-When we used raw counts, p3 which is very popular was the top recommendation for p4 and p5. Using cosine similarity, p3 gets demoted to second place. 
+When we used raw counts, p3 which is very popular was the top recommendation for p4 and p5. Using **cosine similarity, p3 gets demoted to second place**. 
 
 We can also use user actions like cart additions and purchases in this scheme. A heuristic that works well is to use a proxy rating. For example, a product view is a 1, a cart addition a 5, and a purchase an 8\. Now instead of the matrix being just 1s and 0s, we compute cosine similarity using a matrix that has 1s, 5s, and 8s. The proxy ratings can be worked out using their relative ratios. For example, if cart additions are ⅕ of product views, a cart addition is a 5. 
 
@@ -82,15 +93,14 @@ This ‘algorithm’ appears very naive and I remember being a bit surprised at 
 The effectiveness of this naive algorithm comes from
 
 - Most retailers aren’t Amazon, with hundreds of millions of products in the catalog. If your catalog is in the hundreds of thousands, memorizing the dataset can work. Products have a longer shelf life (than user-generated content like social media images) and the ‘rating matrix’  is not as sparse. In other words, the “long tail” is not so long for the likes of Target and Home Depot.  
-- For the likes of Amazon, eBay, or FB marketplace where the tail is truly long, the rating matrix is sparse, and memorizing the dataset can mean memorizing noise (for the products in the tail). This is where the generalizing power of Machine learning helps.   
-- Diversity is not that big of a deal for e-commerce recommenders. Users come to shop and especially on the product page are focussed on a current need.   
+- For the likes of Amazon, eBay, or FB marketplace where the tail is truly long, the rating matrix is sparse, and memorizing the dataset can mean memorizing noise (for the products in the tail). This is where the generalizing power of Machine learning helps.     
    
 
 To put this in context, even a more naive strategy like “best sellers” does quite well on the Product Page. 
 
 ## Product To Vectors
 
-In 2013, the hugely influential word2vec paper came out. It was accompanied by optimised code that ran fast on CPUs and everyone had their Man \- Woman \= King \- Queen moment.  Many folks have already done a great job explaining word2vec, so I will keep it short here. In short, word2vec was trained on text and learned vectors for words, such that words that occur close to each other were close in the vector space. 
+In 2013, the hugely influential word2vec paper came out. It was accompanied by optimised code that ran fast on CPUs and everyone had their Man \- Woman \= King \- Queen moment.  Many folks have already done a great job [explaining word2vec](https://arxiv.org/pdf/1411.2738), so I will keep it short here. In short, word2vec was trained on text and learned vectors for words, such that words that occur close to each other were close in the vector space. 
 
 This was obviously useful for all sorts of text and NLP tasks. To use it for recommenders, we get creative with what “text” and “words” mean.   
 The *text* is simply the user sessions, we saw earlier and the *words* are product IDs.
@@ -126,13 +136,13 @@ It’s also helpful to think about the model capacity. Assuming a product catalo
 
 In the naive co-occurrence approach, we could have about half a trillion (1 Million squared) product pairs. In practice, this matrix is very sparse as most product pairs don’t occur in the data. Let's assume that only 1% of all possible pairs occur. Even then we would have 5 Billion “parameters”. 
 
-The 25X compression in word2vec improves generalization and is another reason why we expect this to do better on platforms with long tails. 
+The **25X compression in word2vec** improves generalization and is another reason why we expect this to do better on platforms with long tails. 
 
 To wrap up this discussion, I just wanted to mention that although the vector arithmetic (Man \- Woman \= King \- Queen) still seems to work for products, its usefulness for practical recommender strategies is perhaps only for leadership demos\!
 
 ## Product Graphs 
 
-Modeling any problem as a graph usually opens up many interesting ways to tackle it. Graph neural networks (GNNs)  introduced  Deep Learning on Graphs and all sorts of problems including recommender systems can be approached this way. For a great in-depth review of GNN’s please see the excellent course materials for Stanford’s CS 224W class. 
+Modeling any problem as a graph usually opens up many interesting ways to tackle it. Graph neural networks (GNNs)  introduced  Deep Learning on Graphs and all sorts of problems including recommender systems can be approached this way. For a great in-depth review of GNN’s please see the excellent course materials for [Stanford’s CS 224W class](https://web.stanford.edu/class/cs224w/). 
 
 Let's go about constructing a graph for products.  There are a few options. 
 
@@ -149,8 +159,7 @@ Now that we have the graph set up, let’s look at how training works. Intuitive
 
 Word2vec considers neighbors that are only within the context window. In the language of graphs, this would be neighbors that are only 1 hop away, where a hop is further restricted to being within the context window. In the graph, “closeness” includes nodes that are not just 1 hop away.  Graph Convolutions also introduce the idea of message-passing networks. A node’s embedding in a graph is influenced by the embeddings of its neighbors.  Here’s a good picture of this iterative process. 
 ![](/assets/img/post_images/gnn.png)
-*Message Passing illustration from stanford's CS 224W slide*
-
+*Message Passing (see source [here](https://web.stanford.edu/class/cs224w/slides/03-GNN1.pdf))*
 The “messages” are embeddings of a node (at a particular depth) and they are “passed” to their neighbors through a neural network with learnable parameters.  
 
 To learn the parameters, we need a loss and some labels.  There are a few options.
@@ -158,7 +167,7 @@ To learn the parameters, we need a loss and some labels.  There are a few option
 - Explicitly use the product interaction data (the adjacency list). The positive examples are then pairs of nodes that are directly connected. This restricts the meaning of being close as being 1 hop away. Note that a node still gets messages from other nodes that could be more than 1 hop away (Depending on how many layers are there in the NN)  
 - Collect a few nearby nodes by running some flavor of weighted random walks of fixed lengths that start at a particular node. The positive labels are now pairs of nodes that are in the neighborhood of the target node.  
 
-After collecting the positive labels, we need to get negative labels. The idea is to sample nodes that are far away from the target node. For large graphs, we can just sample from the uniform distribution and get such nodes with a high probability. These are considered easy negatives, as they are likely to be very unrelated to the target node. However, we want our embeddings to be more discriminative than just being able to separate cameras from bedsheets. So we collect a few hard negatives. Check out the PinSage paper for how and when to add these hard negatives. 
+After collecting the positive labels, we need to get negative labels. The idea is to sample nodes that are far away from the target node. For large graphs, we can just sample from the uniform distribution and get such nodes with a high probability. These are considered easy negatives, as they are likely to be very unrelated to the target node. However, we want our embeddings to be more discriminative than just being able to separate cameras from bedsheets. So we collect a few *hard negatives*. Check out the Pinterest's [PinSage](https://medium.com/pinterest-engineering/pinsage-a-new-graph-convolutional-neural-network-for-web-scale-recommender-systems-88795a107f48) for how and when to add these hard negatives. 
 
 Here’s a rough outline of what the training loop looks like for the toy graph shown below. I’m going to consider that our positive labels are directly connected nodes. 
 ![](/assets/img/post_images/toygraph1.png)
@@ -170,17 +179,17 @@ Let's assume that we use a 2 layer Neural Net. The embeddings of all nodes are i
 2. For the forward pass, we sample a subgraph that is rooted at \[A, B\]. Since we use a 2-layer NN, we limit our exploration to nodes 2 hops away from either \[A, B\]. When we sample edges, we could use edge weights, node visit counts when running random walks, or some other strategy.  One possible subgraph is shown below, where we dropped node F.  Note that G and H are more than 2 hops away and hence were never considered.   
 ![](/assets/img/post_images/toygraph2.png)
 *Sampling nodes rooted at [A,B]*
-3. The forward pass, runs the iterative message passing for each of the nodes shown in the above figure.  
-4. We construct the loss from the positive and negative labels. Options are either the logistic loss or max-margin loss.  
-5. We back-propagate the loss and adjust the parameters of the NN.
+1. The forward pass, runs the iterative message passing for each of the nodes shown in the above figure.  
+2. We construct the loss from the positive and negative labels. Options are either the logistic loss or max-margin loss.  
+3. We back-propagate the loss and adjust the parameters of the NN.
 
 After training, to get the embedding at layer 2 for each node, we run the forward pass for each node in the graph. The PinSage paper has details of how to do this efficiently without having to duplicate computations. To get good embeddings, the negative sampling strategy we choose is crucial. 
 
-One major advantage the Graph Neural Network-based recommendations have over word2vec is that we can get recommendations for new products (aka cold start). When a new product enters the catalog, we already have its Layer 0 embedding (using product text or image). We just need to connect this new node in the graph to a few neighbors. A simple thing to look at nodes with similar layer 0 embeddings and make connections. With the parameters we learned we then run the forward pass around the new node to get its layer 2 embeddings
+One major advantage the Graph Neural Network-based recommendations have over word2vec is that we can get recommendations for new products (aka **cold start**). When a new product enters the catalog, we already have its Layer 0 embedding (using product text or image). We just need to connect this new node in the graph to a few neighbors. A simple thing to look at nodes with similar layer 0 embeddings and make connections. With the parameters we learned we then run the forward pass around the new node to get its layer 2 embeddings
 
 ## Putting it all together \- Personalization, Utility and Rules 
 
-So far, our recommendation strategy has just been looking up the most similar product embeddings for a given query product. Nearest neighbor libraries like HNSWLib and Faiss are great at doing this very fast. However, there is a little more work to be done, before we show the recommendations to the user. There are a few things we haven’t considered yet
+So far, our recommendation strategy has just been looking up the most similar product vector for a given query product. Vector search libraries like HNSWLib and Faiss are great at doing this very fast. However, there is a little more work to be done, before we show the recommendations to the user. There are a few things we haven’t considered yet
 
 - We haven’t personalized the recommendations to the user. Although for the related products page, the query product is the most important input, it usually helps to add other signals like the user too.  
 - Sometimes we get recommendations that are far away from the product taxonomy of the query product. This could be either due to “noisy” co-occurrence patterns, popular products getting oversampled, etc. We need some filters around product taxonomy to keep things clean. Even if a few people look at woodworking books and wooden shelves in the same session, platforms do not want to recommend these together.   
@@ -199,13 +208,13 @@ Some features that make sense for the lightweight ML model.
 - Features that enable personalization. We can look at the user’s recent interactions to come up with a vector. If the vector is in the same embedding space, a dot product between the product and user vector is a good feature for personalization  
    
 
-To train, the (re) ranking model, logistic regression where we use clicks and impressions to predict click-through rate and then rank by that probability is the standard approach. This probability if well calibrated can also be multiplied by profit margins or price to maximize expected revenue. 
+To train, the (re) ranking model, logistic regression where we use clicks and impressions (as binary labels) to predict click-through rate and then rank by that probability is the standard approach. This probability if well calibrated can also be multiplied by profit margins or price to maximize expected revenue. 
 
 ## Pitfalls in Evaluation
 
 When working on a new “algorithm”, it’s very tricky to measure its effectiveness. There is already an “old algorithm running”, and all user interactions are influenced by these recommendations. 
 
-For offline evaluation, we can train the model on some historical sessions and measure the hit rate on recent test sessions. But remember that the users in the historical sessions can only interact with what is recommended by the “old” algorithm. This feedback loop means that the hit rate only measures how similar the new algorithm is to the old one. There is no way around this problem and we use offline evaluation only to weed out the really bad choices. For example, we can experiment with different negative sampling ratios in word2vec to rule out certain configurations if they have very poor hit rates.
+For offline evaluation, we can train the model on some historical sessions and measure the hit rate on recent test sessions. But remember that the users in the historical sessions can only interact with what is recommended by the “old” algorithm. This **feedback loop means that the hit rate only measures how similar the new algorithm is to the old one**. There is no way around this problem and we use offline evaluation only to weed out the really bad choices. For example, we can experiment with different negative sampling ratios in word2vec to rule out certain configurations if they have very poor hit rates.
 
 For the online A/B test, we want to take a few versions of the same algorithm (with different hyperparameters for example). However, the feedback loop continues to bite us and make measurements difficult.
 

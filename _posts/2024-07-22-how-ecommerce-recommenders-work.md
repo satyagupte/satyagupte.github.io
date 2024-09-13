@@ -4,7 +4,7 @@ date: 2024-07-22 04:40:10+00:00
 excerpt: None
 layout: post
 slug: how-ecommerce-recommenders-work
-title: How E-commerce recommenders work - Part 1, Introduction
+title: How E-commerce recommenders work, Introduction
 categories:
 - Recommender Systems
 tags:
