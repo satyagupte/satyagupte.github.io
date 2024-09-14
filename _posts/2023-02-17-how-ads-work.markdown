@@ -70,13 +70,13 @@ This is where we cast a wide net over the Ads Index and quickly find the best ~ 
 
 * Traditional text based systems like Lucene where documents are the ads and the query is constructed from the user’s data and other context. 
 
-* Approximate similarity searches in an embedding space. The heavy work of learning embeddings for the ads is done offline and only the query has to be transformed into an embedding at run time.  **[Two tower DNN’s](https://nofreehunch.org/2023/02/25/retrieval/)** are a popular approach to learn good embeddings. Libraries like HNSWlib and Annoy have made approximate similarity searches very fast. 
+* Approximate similarity searches in an embedding space. The heavy work of learning embeddings for the ads is done offline and only the query has to be transformed into an embedding at run time.  **[Two tower DNN’s](https://satyagupte.github.io/posts/retrieval/)** are a popular approach to learn good embeddings. Libraries like HNSWlib and Annoy have made approximate similarity searches very fast. 
 
 * Random walks on a Graph. In some applications, the graph is obvious (friend graphs on Facebook), but in many other applications, with a bit of creativity it's possible to model user interactions as a graph.  Once the graph is built, walking it can generate a very good set of candidates very fast.
 
 * Matrix Factorization on User and Ad interaction data.  Two Tower DNN's have replaced these techniques.
 
-We will talk about Retrieval in more depth in a follow-up [post](https://nofreehunch.org/2023/02/25/retrieval/).
+We will talk about Retrieval in more depth in a follow-up [post](https://satyagupte.github.io/posts/retrieval/).
 
 ## Ranking
 
@@ -92,7 +92,7 @@ This is where the list of potential candidates selected by Retrieval are scored 
 
 All these model scores are combined in some way in the final ranking utility function, which is the “secret sauce” unique to each platform. Secret sauce is usually a euphemism for fine tuned (over years) heuristics and techniques that are not based on gradient descent if you catch the drift ! 
 
-Models used in this stage also need to be refreshed in near real time. We will look at Ranking in much more depth in a follow up [post](https://nofreehunch.org/2023/03/10/ads-ranking/).  
+Models used in this stage also need to be refreshed in near real time. We will look at Ranking in much more depth in a follow up [post](https://satyagupte.github.io/posts/ads-ranking/).  
 
 #### Auction
 

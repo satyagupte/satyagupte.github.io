@@ -9,7 +9,7 @@ wordpress_id: 337
 ---
 
 Last time we looked at how to
-best [utilize a GPU](https://nofreehunch.org/2023/07/24/getting-the-biggest-bang-for-your-gpu-buck/) when training Deep
+best [utilize a GPU](https://satyagupte.github.io/posts/make-the-most-of-your-gpu/) when training Deep
 Learning models. Now it is time to put that to use and build a model that can tell apart the bewilderingly similar
 looking species of flora and fauna. This kind of image classification is generally
 called [Fine grained](https://ai.googleblog.com/2020/05/announcing-7th-fine-grained-visual.html) visual categorization

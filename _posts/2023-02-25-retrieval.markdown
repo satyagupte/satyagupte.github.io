@@ -15,7 +15,7 @@ tags:
 - Two tower DNN
 ---
 
-In the [last post ](https://nofreehunch.org/2023/02/17/how-ads-work/)we looked at an overview of the entire Ads system. In this post we will talk about Retrieval in depth. To recap, in Retrieval the goal is to cast a wide net over the entire Ads Index and quickly select a few thousand ad candidates which are broadly relevant for the user and query context. 
+In the [last post ](https://satyagupte.github.io/posts/how-ads-work/)we looked at an overview of the entire Ads system. In this post we will talk about Retrieval in depth. To recap, in Retrieval the goal is to cast a wide net over the entire Ads Index and quickly select a few thousand ad candidates which are broadly relevant for the user and query context. 
 
 #### Table of contents
 - [Text based document search](#text-based-document-search)

@@ -15,7 +15,7 @@ tags:
 math: true
 ---
 
-Welcome to  the third post in the [How Ads work](https://nofreehunch.org/tag/ads-ml/) series. In this post we are going to discuss Ads Ranking in depth. This is where ML really comes to the party! At the end of [Ads Retrieval](https://nofreehunch.org/2023/02/25/retrieval/), we have a pool of about a thousand fairly relevant ad candidates. Now it’s time to really identify the very best ads.  
+Welcome to  the third post in the [How Ads work](https://satyagupte.github.io/categories/ml-for-ads/) series. In this post we are going to discuss Ads Ranking in depth. This is where ML really comes to the party! At the end of [Ads Retrieval](https://satyagupte.github.io/posts/retrieval/), we have a pool of about a thousand fairly relevant ad candidates. Now it’s time to really identify the very best ads.  
 
 #### Table of contents
 - [Formulating it as a ML problem](#formulating-it-as-a-ml-problem)
@@ -126,7 +126,7 @@ For the base DL model it’s useful to group the features semantically  into Us
 
   * Age of the Ad. How old the ad is also an important explanatory feature, Similar to position we use it during training but not in serving.
 
-  * Retrieval candidate source. Remember that in the previous stage of [Retrieval](https://nofreehunch.org/2023/02/25/retrieval/), there are usually several candidate generators. Some of these (ex the Two Tower model we discussed in depth) will give more relevant ads than others. We can use this information as a feature. However we should not use any scores from retrieval as those are usually not comparable between different candidate generators in retrieval. 
+  * Retrieval candidate source. Remember that in the previous stage of [Retrieval](https://satyagupte.github.io/posts/retrieval/), there are usually several candidate generators. Some of these (ex the Two Tower model we discussed in depth) will give more relevant ads than others. We can use this information as a feature. However we should not use any scores from retrieval as those are usually not comparable between different candidate generators in retrieval. 
 
 **What to do when features are missing**
 
@@ -136,7 +136,7 @@ When a feature is missing, we set its is_missing indicator feature and use a sen
 
 **Feature Preprocessing**
 
-We can  group these features is into One Hot, Multi Hot, Numerics, Text and Dense Vectors to see how preprocessing is usually done.  Feel feel to skip this section if you already went through the [Ads Retrieval](https://nofreehunch.org/2023/02/25/retrieval/) post as it is similar. 
+We can  group these features is into One Hot, Multi Hot, Numerics, Text and Dense Vectors to see how preprocessing is usually done.  Feel feel to skip this section if you already went through the [Ads Retrieval](https://satyagupte.github.io/posts/retrieval/) post as it is similar. 
 
 One Hot and  categorical features are hashed into a fixed dimension vector and then fed into an embedding layer. This embedding layer can be shared between the Ad And User  for the same feature. For example the ad and user category multi hot vectors can share embeddings as long as the category Ids mean the same thing for both the Ad and User.
 

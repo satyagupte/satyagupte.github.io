@@ -12,7 +12,7 @@ tags:
 - GSP
 ---
 
-Welcome to the fourth post in the [How Ads work](https://nofreehunch.org/category/ml-for-ads/) series. Now it’s time to earn some money and sell ads ! This will be a short post and my goal in this post is to outline the basic mechanics of how the ads auction runs and complete our end to end understanding of the entire ads funnel.
+Welcome to the fourth post in the [How Ads work](https://satyagupte.github.io/categories/ml-for-ads/) series. Now it’s time to earn some money and sell ads ! This will be a short post and my goal in this post is to outline the basic mechanics of how the ads auction runs and complete our end to end understanding of the entire ads funnel.
 
 #### Table of contents
 - [Why do we need an Auction](#why-do-we-need-an-auction)
@@ -24,9 +24,9 @@ Welcome to the fourth post in the [How Ads work](https://nofreehunch.org/categor
 
 ## Why do we need an Auction
 
-After [Ranking](https://nofreehunch.org/2023/03/10/ads-ranking/) we have a list of ads ranked by probability of being clicked. From our list of ranked ads, we use a cutoff (on Utility or pClick)  to select the ads most likely to be clicked. For a traditional recommender system we would just show these ads in the same order and maximize user clicks. But for ads our goal is to maximize revenue, while keeping users happy.
+After [Ranking](https://satyagupte.github.io/posts/ads-ranking/) we have a list of ads ranked by probability of being clicked. From our list of ranked ads, we use a cutoff (on Utility or pClick)  to select the ads most likely to be clicked. For a traditional recommender system we would just show these ads in the same order and maximize user clicks. But for ads our goal is to maximize revenue, while keeping users happy.
 
-Remember from our [introductory post](https://nofreehunch.org/2023/02/17/how-ads-work/) that advertisers pay the platform only when a user clicks on their ad (this is called CPC, or cost per click). The question is how much should we (the platform) charge the advertisers.
+Remember from our [introductory post](https://satyagupte.github.io/posts/how-ads-work/) that advertisers pay the platform only when a user clicks on their ad (this is called CPC, or cost per click). The question is how much should we (the platform) charge the advertisers.
 
 A crude first attempt would be to simply have a fixed price per position and charge the advertisers accordingly. This is roughly how advertising in a printed magazine works and in the early days of internet advertising the platform rented out space in similar style(remember ugly banner ads ?). This inflexible scheme has several drawbacks chief amongst which is the problem of determining the "right" price. Ads for a user searching for “apartments for rent” are worth much more than for a search like “quotes about sunrise”. 
 
@@ -56,7 +56,7 @@ Now advertisers are no longer able to figure out the minimum bid required to win
 
 ### What about slot position
 
-If you read the post on [Ads Ranking](https://nofreehunch.org/2023/03/10/ads-ranking/), you should have noticed that our pClick model outputs probability of an ad getting clicked for the first slot position. We set up our training to use slot position as an explanatory feature but during serving we set this feature to 1. We did this to reduce the position bias inherent in our training data.
+If you read the post on [Ads Ranking](https://satyagupte.github.io/posts/ads-ranking/), you should have noticed that our pClick model outputs probability of an ad getting clicked for the first slot position. We set up our training to use slot position as an explanatory feature but during serving we set this feature to 1. We did this to reduce the position bias inherent in our training data.
 
 Now the question is if its legit to use pClick (which is for slot 1) when we calculate expected revenue (pClick * bid) and place ads in all available slots. The answer is that it’s okay because even though click probability actually decreases as we go to lower positions, since it’s a constant scaling factor it does not change the actual allocation of ads to lower slots.
 
@@ -68,7 +68,7 @@ If we really want to model advertiser position effects, we could in theory run t
 
 ## Closing thoughts
 
-Our big picture goal is to maximize revenue while keeping users happy. We keep users happy by using ML for [Retrieval](https://nofreehunch.org/2023/02/25/retrieval/) and [Ranking](https://nofreehunch.org/2023/03/10/ads-ranking/) and select only the most relevant ads that enter the auction. The auction then maximizes revenue by using  rules for allocation and pricing like the GSP mechanism.  For a healthy and efficient auction we need to have a large pool of advertisers competing for a few slots. A large pool of advertisers only show up when the platform provides true value to users. This needs relevant ads and even more relevant organic content. 
+Our big picture goal is to maximize revenue while keeping users happy. We keep users happy by using ML for [Retrieval](https://satyagupte.github.io/posts/retrieval/) and [Ranking](https://satyagupte.github.io/posts/ads-ranking/) and select only the most relevant ads that enter the auction. The auction then maximizes revenue by using  rules for allocation and pricing like the GSP mechanism.  For a healthy and efficient auction we need to have a large pool of advertisers competing for a few slots. A large pool of advertisers only show up when the platform provides true value to users. This needs relevant ads and even more relevant organic content. 
 
 This concludes the How Ads work series of posts. I had a great time writing these  and we covered a lot of ground. I hope you enjoyed reading about the machine learning behind ads too. Thank you for reading!
 
